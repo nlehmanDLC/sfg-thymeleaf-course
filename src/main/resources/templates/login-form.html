@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+
+    <link th:href="@{/css/bootstrap-3.3.7-dist/css/bootstrap.min.css}"
+          href="../static/css/bootstrap-3.3.7-dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          media="screen"/>
+    <script
+            th:src="@{/js/jquery3.6.0.min.js}"
+            src="../static/js/jquery3.6.0.min.js"></script>
+
+    <link th:href="@{css/custom.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{css/login.css}" rel="stylesheet" media="screen"/>
+    <title>Login</title>
+</head>
+<body>
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Sign In</h5>
+                    <form class="form-signin" th:object="${loginCommand}" th:action="@{/login}" method="post">
+
+                        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                            <p th:text="#{loginCommand.hasErrors}">Error Message</p>
+                        </div>
+
+                        <div class="form-label-group"
+                             th:class="${#fields.hasErrors('username')} ? 'form-label-group has-error' : 'form-label-group'">
+                            <input type="text" id="username" class="form-control" placeholder="Username" required
+                                   autofocus th:field="*{username}" th:errorclass="has-error">
+                            <label for="username">Username</label>
+                            <span class="help-block" th:if="${#fields.hasErrors('username')}">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('username')}" th:text="${err}"/>
+                                </ul>
+                            </span>
+                        </div>
+
+                        <div class="form-label-group"
+                             th:class="${#fields.hasErrors('password')} ? 'form-label-group has-error' : 'form-label-group'">
+                            <input type="password" id="password" class="form-control" placeholder="Password" required
+                                   th:field="*{password}" th:errorclass="has-error">
+                            <label for="password">Password</label>
+                            <span class="help-block" th:if="${#fields.hasErrors('password')}">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('password')}" th:text="${err}"/>
+                                </ul>
+                            </span>
+                        </div>
+
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
